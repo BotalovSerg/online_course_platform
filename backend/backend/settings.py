@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # tools
     "rest_framework",
+    "rest_framework_simplejwt",
     # app
     "custom_auth",
     "custom_rbac",
