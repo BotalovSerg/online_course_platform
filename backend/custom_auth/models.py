@@ -81,5 +81,10 @@ class CustomUser(AbstractBaseUser):
 
         return bcrypt.checkpw(raw_password.encode("utf-8"), self.password.encode("utf-8"))
 
+    def save(self, *args, **kwargs) -> None:
+        if self.password:
+            self.set_password(self.password)
+        return super().save(*args, **kwargs)
+
     class Meta:
         db_table = "users_user"
