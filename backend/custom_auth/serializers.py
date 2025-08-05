@@ -35,3 +35,31 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data.get("password"))
         user.save()
         return user
+
+
+class UpdateUserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = CustomUser
+        fields = [
+            "first_name",
+            "last_name",
+            "patronymic",
+            "email",
+            "role",
+            "password",
+        ]
+
+    def update(self, instance: CustomUser, validated_data: dict):
+        password = validated_data.pop("password")
+
+        if not password or not instance.check_password(password):
+            raise serializers.ValidationError("Неверные пароль")
+
+        instance.set_password(password)
+
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        return instance
