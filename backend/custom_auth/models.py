@@ -45,11 +45,16 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractBaseUser):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    patronymic = models.CharField(max_length=50, blank=True)
+    patronymic = models.CharField(max_length=50, blank=True, null=True)
     email = models.EmailField(unique=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    role = models.ForeignKey("custom_rbac.Role", on_delete=models.SET_NULL, null=True, blank=True)
+    role = models.ForeignKey(
+        "custom_rbac.Role",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
 
     objects = CustomUserManager()
 
@@ -80,11 +85,6 @@ class CustomUser(AbstractBaseUser):
     def check_password(self, raw_password):
 
         return bcrypt.checkpw(raw_password.encode("utf-8"), self.password.encode("utf-8"))
-
-    def save(self, *args, **kwargs) -> None:
-        if self.password:
-            self.set_password(self.password)
-        return super().save(*args, **kwargs)
 
     class Meta:
         db_table = "users_user"
