@@ -1,7 +1,7 @@
 import jwt
 from django.conf import settings
-from django.http import JsonResponse
 from django.contrib.auth.models import AnonymousUser
+from django.http import JsonResponse
 from rest_framework import status
 
 from .models import CustomUser

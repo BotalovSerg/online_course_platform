@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import RoleView, BusinessElementView, AccessRolesRuleView
+from .views import AccessRolesRuleView, BusinessElementView, RoleView
 
 urlpatterns = [
     path("roles/", RoleView.as_view(), name="roles"),

@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Role, BusinessElement, AccessRolesRule
+
+from .models import AccessRolesRule, BusinessElement, Role
 
 
 @admin.register(Role)

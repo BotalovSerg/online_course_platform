@@ -1,14 +1,14 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from django.http import HttpRequest
-
 from custom_auth.authentication import JWTAuthentication
-from .models import Role, BusinessElement, AccessRolesRule
+from django.http import HttpRequest
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .models import AccessRolesRule, BusinessElement, Role
 from .serializers import (
-    RoleSerializer,
-    BusinessElementSerializer,
     AccessRolesRuleSerializer,
+    BusinessElementSerializer,
+    RoleSerializer,
 )
 
 

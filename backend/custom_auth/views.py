@@ -1,16 +1,17 @@
-import jwt
 from datetime import datetime, timedelta, timezone
 
-from django.http import HttpRequest
+import jwt
 from django.conf import settings
 from django.contrib.auth import logout
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from django.http import HttpRequest
 from rest_framework import status
-from .authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .authentication import JWTAuthentication
 from .models import CustomUser
-from .serializers import UserSerializer, ProfileSerializer
+from .serializers import ProfileSerializer, UserSerializer
 
 
 class RegisterView(APIView):

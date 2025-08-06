@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Role, BusinessElement, AccessRolesRule
+
+from .models import AccessRolesRule, BusinessElement, Role
 
 
 class RoleSerializer(serializers.ModelSerializer):
