@@ -6,7 +6,6 @@ from .models import CustomUser
 
 @admin.register(CustomUser)
 class UserAdmin(admin.ModelAdmin):
-
     def save_model(
         self,
         request: HttpRequest,

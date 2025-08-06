@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('custom_rbac', '0002_businesselement_alter_role_name_accessrolesrule'),
+        ("custom_rbac", "0002_businesselement_alter_role_name_accessrolesrule"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='role',
-            name='name',
+            model_name="role",
+            name="name",
             field=models.CharField(max_length=50, unique=True),
         ),
     ]

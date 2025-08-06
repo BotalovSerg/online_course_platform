@@ -1,8 +1,8 @@
-from typing import Any
 import jwt
 from django.conf import settings
 from django.http import JsonResponse
 from django.contrib.auth.models import AnonymousUser
+from rest_framework import status
 
 from .models import CustomUser
 
@@ -12,7 +12,6 @@ class JWTMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-
         if request.path.startswith("/admin/"):
             return self.get_response(request)
 
@@ -29,6 +28,9 @@ class JWTMiddleware:
                 jwt.ExpiredSignatureError,
                 CustomUser.DoesNotExist,
             ):
-                return JsonResponse({"error": "Unauthorized"}, status=401)
+                return JsonResponse(
+                    {"error": "Unauthorized"},
+                    status=status.HTTP_401_UNAUTHORIZED,
+                )
 
         return self.get_response(request)

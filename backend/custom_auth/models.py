@@ -28,7 +28,9 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, first_name, last_name, password=None, patronymic=""):
+    def create_superuser(
+        self, email, first_name, last_name, password=None, patronymic=""
+    ):
         user = self.create_user(
             email=email,
             first_name=first_name,
@@ -75,7 +77,6 @@ class CustomUser(AbstractBaseUser):
         return self.is_admin
 
     def set_password(self, raw_password):
-
         if raw_password:
             self.password = bcrypt.hashpw(
                 raw_password.encode("utf-8"),
@@ -83,8 +84,9 @@ class CustomUser(AbstractBaseUser):
             ).decode("utf-8")
 
     def check_password(self, raw_password):
-
-        return bcrypt.checkpw(raw_password.encode("utf-8"), self.password.encode("utf-8"))
+        return bcrypt.checkpw(
+            raw_password.encode("utf-8"), self.password.encode("utf-8")
+        )
 
     class Meta:
         db_table = "users_user"

@@ -4,13 +4,13 @@ from datetime import datetime, timedelta, timezone
 from django.http import HttpRequest
 from django.conf import settings
 from django.contrib.auth import logout
-from django.contrib.auth.models import AnonymousUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-
+from .authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated
 from .models import CustomUser
-from .serializers import UserSerializer
+from .serializers import UserSerializer, ProfileSerializer
 
 
 class RegisterView(APIView):
@@ -39,7 +39,6 @@ class LoginView(APIView):
         try:
             user = CustomUser.objects.get(email=email, is_active=True)
             if user.check_password(password):
-
                 token = jwt.encode(
                     {
                         "user_id": user.pk,
@@ -66,7 +65,7 @@ class LoginView(APIView):
 
 class LogoutView(APIView):
     def post(self, request: HttpRequest):
-        if request.user and not isinstance(request.user, AnonymousUser):
+        if request.user.is_authenticated:
             logout(request)
             return Response(
                 {"message": "Successfully logged out."},
@@ -75,4 +74,39 @@ class LogoutView(APIView):
         return Response(
             {"error": "Not authenticated"},
             status=status.HTTP_401_UNAUTHORIZED,
+        )
+
+
+class ProfileView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request: HttpRequest):
+        if not request.user.is_authenticated:
+            return Response(
+                {"error": "Unauthorized"},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+
+        serializer = ProfileSerializer(request.user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                {"message": "Profile updated"},
+                status=status.HTTP_200_OK,
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request: HttpRequest):
+        if not request.user.is_authenticated:
+            return Response(
+                {"error": "Unauthorized"},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+        request.user.is_active = False
+        request.user.save()
+        logout(request)
+        return Response(
+            {"message": "Account deactivated, please log out"},
+            status=status.HTTP_200_OK,
         )
