@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.http import HttpRequest
 
+from custom_auth.authentication import JWTAuthentication
 from .models import Role, BusinessElement, AccessRolesRule
 from .serializers import (
     RoleSerializer,
@@ -12,6 +13,8 @@ from .serializers import (
 
 
 class RoleView(APIView):
+    authentication_classes = [JWTAuthentication]
+
     def get(self, request: HttpRequest):
         if not request.user.is_authenticated or request.user.role.name != "admin":
             return Response(
@@ -36,6 +39,8 @@ class RoleView(APIView):
 
 
 class BusinessElementView(APIView):
+    authentication_classes = [JWTAuthentication]
+
     def get(self, request: HttpRequest):
         if not request.user.is_authenticated or request.user.role.name != "admin":
             return Response({"error": "Forbidden"}, status=status.HTTP_403_FORBIDDEN)
@@ -54,6 +59,8 @@ class BusinessElementView(APIView):
 
 
 class AccessRolesRuleView(APIView):
+    authentication_classes = [JWTAuthentication]
+
     def get(self, request: HttpRequest):
         if not request.user.is_authenticated or request.user.role.name != "admin":
             return Response({"error": "Forbidden"}, status=status.HTTP_403_FORBIDDEN)
