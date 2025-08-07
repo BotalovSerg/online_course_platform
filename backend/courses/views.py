@@ -17,7 +17,8 @@ class CourseView(APIView):
         if request.user.is_anonymous:
             request.user = GuestUser()
         rule = AccessRolesRule.objects.filter(
-            role=request.user.role, element__name="courses"
+            role=request.user.role,
+            element__name="courses",
         ).first()
         if not rule or not (rule.read_permission or rule.read_all_permission):
             return Response({"error": "Forbidden"}, status=status.HTTP_403_FORBIDDEN)
@@ -27,17 +28,18 @@ class CourseView(APIView):
 
     def post(self, request: HttpRequest):
         if not request.user.is_authenticated:
-            return Response(
-                {"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED
-            )
+            return Response({"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
         rule = AccessRolesRule.objects.filter(
-            role=request.user.role, element__name="courses"
+            role=request.user.role,
+            element__name="courses",
         ).first()
         if not rule or not rule.create_permission:
             return Response({"error": "Forbidden"}, status=status.HTTP_403_FORBIDDEN)
-        data = request.data.copy()
-        data["creator"] = request.user.id
-        serializer = CourseSerializer(data=data)
+
+        serializer = CourseSerializer(
+            data=request.data,
+            context={"creator": request.user},
+        )
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -49,11 +51,10 @@ class EnrollmentView(APIView):
 
     def get(self, request: HttpRequest):
         if not request.user.is_authenticated:
-            return Response(
-                {"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED
-            )
+            return Response({"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
         rule = AccessRolesRule.objects.filter(
-            role=request.user.role, element__name="enrollments"
+            role=request.user.role,
+            element__name="enrollments",
         ).first()
         if not rule or not (rule.read_permission or rule.read_all_permission):
             return Response({"error": "Forbidden"}, status=status.HTTP_403_FORBIDDEN)
@@ -67,17 +68,18 @@ class EnrollmentView(APIView):
 
     def post(self, request: HttpRequest):
         if not request.user.is_authenticated:
-            return Response(
-                {"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED
-            )
+            return Response({"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
         rule = AccessRolesRule.objects.filter(
-            role=request.user.role, element__name="enrollments"
+            role=request.user.role,
+            element__name="enrollments",
         ).first()
         if not rule or not rule.create_permission:
             return Response({"error": "Forbidden"}, status=status.HTTP_403_FORBIDDEN)
-        data = request.data.copy()
-        data["user"] = request.user.id
-        serializer = EnrollmentSerializer(data=data)
+
+        serializer = EnrollmentSerializer(
+            data=request.data,
+            context={"user": request.user},
+        )
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
