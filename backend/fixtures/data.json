@@ -624,6 +624,110 @@
     }
   },
   {
+    "model": "admin.logentry",
+    "pk": 49,
+    "fields": {
+      "action_time": "2025-08-07T05:38:18.313Z",
+      "user": 6,
+      "content_type": 6,
+      "object_id": "15",
+      "object_repr": "postuser@mail.com",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 50,
+    "fields": {
+      "action_time": "2025-08-07T05:38:18.313Z",
+      "user": 6,
+      "content_type": 6,
+      "object_id": "14",
+      "object_repr": "postuser@mail.ru",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 51,
+    "fields": {
+      "action_time": "2025-08-07T05:38:18.313Z",
+      "user": 6,
+      "content_type": 6,
+      "object_id": "13",
+      "object_repr": "postman11@mail.ru",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 52,
+    "fields": {
+      "action_time": "2025-08-07T05:38:18.313Z",
+      "user": 6,
+      "content_type": 6,
+      "object_id": "12",
+      "object_repr": "postman1@mail.ru",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 53,
+    "fields": {
+      "action_time": "2025-08-07T05:38:18.313Z",
+      "user": 6,
+      "content_type": 6,
+      "object_id": "11",
+      "object_repr": "postman@mail.ru",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 54,
+    "fields": {
+      "action_time": "2025-08-07T09:34:00.833Z",
+      "user": 6,
+      "content_type": 6,
+      "object_id": "16",
+      "object_repr": "ivan@mail.ru",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 55,
+    "fields": {
+      "action_time": "2025-08-07T09:34:22.009Z",
+      "user": 6,
+      "content_type": 11,
+      "object_id": "2",
+      "object_repr": "ivan@mail.ru - Django для продвинутых + DRF + React",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 56,
+    "fields": {
+      "action_time": "2025-08-07T09:34:34.114Z",
+      "user": 6,
+      "content_type": 11,
+      "object_id": "3",
+      "object_repr": "student@example.com - Django для продвинутых + DRF + React",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
     "model": "auth.permission",
     "pk": 1,
     "fields": {
@@ -1175,44 +1279,14 @@
   },
   {
     "model": "custom_auth.customuser",
-    "pk": 11,
+    "pk": 16,
     "fields": {
-      "password": "$2b$12$YZFMsBCA9uF1ohZ8FQ1ZE.wFnvsrMf047LIAnn4CmALp2jqvIxFC2",
-      "last_login": null,
-      "first_name": "First",
-      "last_name": "Last",
+      "password": "$2b$12$EMKNPUeMxbeifObD1MuB0ODsrqfa.VYMwTqBpFURokG7E6OCjvwGm",
+      "last_login": "2025-08-07T09:33:25Z",
+      "first_name": "Ivan",
+      "last_name": "Petrov",
       "patronymic": null,
-      "email": "postman@mail.ru",
-      "is_active": true,
-      "is_admin": false,
-      "role": 3
-    }
-  },
-  {
-    "model": "custom_auth.customuser",
-    "pk": 12,
-    "fields": {
-      "password": "$2b$12$P6KJnU.wv8lsI/Ktil3ANOzdx5P41lVA0P0qwnWHJvjeg91zHPKca",
-      "last_login": null,
-      "first_name": "First",
-      "last_name": "Last",
-      "patronymic": null,
-      "email": "postman1@mail.ru",
-      "is_active": true,
-      "is_admin": false,
-      "role": 3
-    }
-  },
-  {
-    "model": "custom_auth.customuser",
-    "pk": 13,
-    "fields": {
-      "password": "$2b$12$re59gxv2.UvIZzu2BzApIuKejj4yB4Jm6eQMDCyvELtT9tE/kpxqC",
-      "last_login": null,
-      "first_name": "First",
-      "last_name": "Last",
-      "patronymic": null,
-      "email": "postman11@mail.ru",
+      "email": "ivan@mail.ru",
       "is_active": true,
       "is_admin": false,
       "role": 5
@@ -1434,12 +1508,41 @@
     }
   },
   {
+    "model": "courses.course",
+    "pk": 4,
+    "fields": {
+      "name": "Django для продвинутых + DRF + React",
+      "description": "Создание веб-приложений на Django",
+      "price": "249.56",
+      "creator": 7,
+      "created_at": "2025-08-07T08:34:32.348Z"
+    }
+  },
+  {
     "model": "courses.enrollment",
     "pk": 1,
     "fields": {
       "user": 8,
       "course": 2,
       "enrolled_at": "2025-08-05T06:31:31.310Z"
+    }
+  },
+  {
+    "model": "courses.enrollment",
+    "pk": 2,
+    "fields": {
+      "user": 16,
+      "course": 4,
+      "enrolled_at": "2025-08-07T09:34:22.003Z"
+    }
+  },
+  {
+    "model": "courses.enrollment",
+    "pk": 3,
+    "fields": {
+      "user": 8,
+      "course": 4,
+      "enrolled_at": "2025-08-07T09:34:34.111Z"
     }
   }
 ]

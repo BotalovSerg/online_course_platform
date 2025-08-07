@@ -18,10 +18,10 @@ urlpatterns = [
         BusinessElementDetailView.as_view(),
         name="business-element-update",
     ),
-    path("access-roles/", AccessRolesRuleView.as_view(), name="access-roles"),
+    path("rules/", AccessRolesRuleView.as_view(), name="access-rules"),
     path(
-        "access-roles/<int:rule_id>/",
+        "rules/<int:rule_id>/",
         AccessRolesRuleDetailView.as_view(),
-        name="access-roles-update",
+        name="access-rules-update",
     ),
 ]
