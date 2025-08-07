@@ -82,6 +82,30 @@ class BusinessElementView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class BusinessElementDetailView(APIView):
+    authentication_classes = [JWTAuthentication]
+
+    def patch(self, request: HttpRequest, element_id: int):
+        if not request.user.is_authenticated or request.user.role.name != "admin":
+            return Response(
+                {"error": "Forbidden"},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+        try:
+            element = BusinessElement.objects.get(id=element_id)
+        except BusinessElement.DoesNotExist:
+            return Response(
+                {"error": "BusinessElement not found"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        serializer = BusinessElementSerializer(element, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class AccessRolesRuleView(APIView):
     authentication_classes = [JWTAuthentication]
 
@@ -99,4 +123,28 @@ class AccessRolesRuleView(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class AccessRolesRuleDetailView(APIView):
+    authentication_classes = [JWTAuthentication]
+
+    def patch(self, request: HttpRequest, rule_id: int):
+        if not request.user.is_authenticated or request.user.role.name != "admin":
+            return Response(
+                {"error": "Forbidden"},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+        try:
+            rule = AccessRolesRule.objects.get(id=rule_id)
+        except AccessRolesRule.DoesNotExist:
+            return Response(
+                {"error": "AccessRolesRule not found"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        serializer = AccessRolesRuleSerializer(rule, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
