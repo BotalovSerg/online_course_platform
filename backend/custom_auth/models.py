@@ -1,5 +1,6 @@
 import bcrypt
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from custom_rbac.models import Role
+from django.contrib.auth.models import AbstractBaseUser, AnonymousUser, BaseUserManager
 from django.db import models
 
 
@@ -89,3 +90,9 @@ class CustomUser(AbstractBaseUser):
 
     class Meta:
         db_table = "users_user"
+
+
+class GuestUser(AnonymousUser):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.role = Role.objects.get(name="guest")

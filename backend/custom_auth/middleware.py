@@ -1,10 +1,9 @@
 import jwt
 from django.conf import settings
-from django.contrib.auth.models import AnonymousUser
 from django.http import JsonResponse
 from rest_framework import status
 
-from .models import CustomUser
+from .models import CustomUser, GuestUser
 
 
 class JWTMiddleware:
@@ -15,7 +14,7 @@ class JWTMiddleware:
         if request.path.startswith("/admin/"):
             return self.get_response(request)
 
-        request.user = AnonymousUser()
+        request.user = GuestUser()
         auth_header = request.headers.get("Authorization")
         if auth_header and auth_header.startswith("Bearer "):
             token = auth_header.split(" ")[1]
